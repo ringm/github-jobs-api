@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const SearchBarContainer = styled.div`
   width: min(1100px, 90%);
-  height: 80px;
+  min-height: 80px;
   background-color: ${props => props.theme === 'light' ? '#fff' : '#19202D'};
   border-radius: 6px;
   display: flex;
