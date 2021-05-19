@@ -110,7 +110,7 @@ export default function Result(props) {
     if(days === 0 && hours === 0) return `${minutes} min ago`
     if(days === 0) return `${hours} ${hours === 1 ? 'hr' : 'hrs'} ago`
     return `${days} ${days === 1 ? 'day' : 'days'} ago`
-}
+  }
 
   return (
     <ResultContainer theme={theme} img={job.company_logo}>
