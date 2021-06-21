@@ -243,7 +243,8 @@ export default function Search({ theme, onContractFilterToggle, onPositionFilter
     <>
       <SearchBarContainer theme={theme}>
         <SearchBarSmall theme={theme}>
-          <input className="input-small" type='text' placeholder="Filter by title..." />
+          <label htmlFor="positionFilterSmall"></label>
+          <input id="positionFilterSmall" name="positionFilterSmall" className="input-small" type='text' placeholder="Filter by title..." />
           <div className="icons-small">
             <svg 
               className="filter-icon" 
