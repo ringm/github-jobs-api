@@ -259,8 +259,9 @@ export default function Search({ theme, onContractFilterToggle, onPositionFilter
         <SearchBarBig>
           <SearchCol>
             <img className="icon" src="../assets/desktop/icon-search-purple.svg" alt="icon-search"/>
-            <label className="hidden" htmlFor="positionFilter"></label>
+            <label htmlFor="positionFilter"></label>
             <input 
+              id="positionFilter"
               name="positionFilter"
               className="input" 
               type='text' 
@@ -271,8 +272,9 @@ export default function Search({ theme, onContractFilterToggle, onPositionFilter
           </SearchCol>
           <SearchCol border>
             <img className="icon" src="../assets/desktop/icon-location.svg" alt="icon-search"/>
-            <label className="hidden" htmlFor="locationFilter"></label>
-            <input 
+            <label htmlFor="locationFilter"></label>
+            <input
+              id="locationFilter"
               name="locationFilter"
               className="input" 
               type='text' 
@@ -313,7 +315,7 @@ export default function Search({ theme, onContractFilterToggle, onPositionFilter
                 value={locationFilter}
                 onInput ={e => onLocationFilterChange(e.target.value)}
               />
-              <label className="hidden" htmlFor="location"></label>
+              <label htmlFor="location"></label>
             </div>
             <div className="row contract-filter">
               <input 
