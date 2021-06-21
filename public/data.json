@@ -1,6 +1,6 @@
 [
   {
-    "id": 1,
+    "id": "dNKvL0q8j7",
     "company": "Scoot",
     "logo": "./assets/logos/scoot.svg",
     "logoBackground": "hsl(36, 87%, 49%)",
@@ -31,7 +31,7 @@
     }
   },
   {
-    "id": 2,
+    "id": "Pn4RFkfVPS",
     "company": "Blogr",
     "logo": "./assets/logos/blogr.svg",
     "logoBackground": "hsl(12, 79%, 52%)",
@@ -62,7 +62,7 @@
     }
   },
   {
-    "id": 3,
+    "id": "3bt_VoYBkB",
     "company": "Vector",
     "logo": "./assets/logos/vector.svg",
     "logoBackground": "hsl(235, 10%, 23%)",
@@ -92,7 +92,7 @@
     }
   },
   {
-    "id": 4,
+    "id": "jNiGjuiNY4",
     "company": "Office Lite",
     "logo": "./assets/logos/officelite.svg",
     "logoBackground": "hsl(227, 62%, 48%)",
@@ -124,7 +124,7 @@
     }
   },
   {
-    "id": 5,
+    "id": "1utiYOKAjh",
     "company": "Pod",
     "logo": "./assets/logos/pod.svg",
     "logoBackground": "hsl(216, 46%, 14%)",
@@ -160,7 +160,7 @@
     }
   },
   {
-    "id": 6,
+    "id": "2VIz52Ce1M",
     "company": "Creative",
     "logo": "./assets/logos/creative.svg",
     "logoBackground": "hsl(295, 55%, 21%)",
@@ -194,7 +194,7 @@
     }
   },
   {
-    "id": 7,
+    "id": "Rfq8VW3FuR",
     "company": "Pomodoro",
     "logo": "./assets/logos/pomodoro.svg",
     "logoBackground": "hsl(254, 71%, 45%)",
@@ -225,7 +225,7 @@
     }
   },
   {
-    "id": 8,
+    "id": "vvhYfDP_TW",
     "company": "Maker",
     "logo": "./assets/logos/maker.svg",
     "logoBackground": "hsl(218, 58%, 31%)",
@@ -256,7 +256,7 @@
     }
   },
   {
-    "id": 9,
+    "id": "EyR20ljjtF",
     "company": "Coffeeroasters",
     "logo": "./assets/logos/coffeeroasters.svg",
     "logoBackground": "hsl(29, 60%, 87%)",
@@ -287,7 +287,7 @@
     }
   },
   {
-    "id": 10,
+    "id": "ecy94dKAAi",
     "company": "Mastercraft",
     "logo": "./assets/logos/mastercraft.svg",
     "logoBackground": "hsl(0, 0%, 12%)",
@@ -320,7 +320,7 @@
     }
   },
   {
-    "id": 11,
+    "id": "ZeA8H3W71K",
     "company": "Crowdfund",
     "logo": "./assets/logos/crowdfund.svg",
     "logoBackground": "hsl(157, 57%, 50%)",
@@ -353,7 +353,7 @@
     }
   },
   {
-    "id": 12,
+    "id": "vUStWkBwlC",
     "company": "Typemaster",
     "logo": "./assets/logos/typemaster.svg",
     "logoBackground": "hsl(22, 89%, 52%)",
@@ -385,7 +385,7 @@
     }
   },
   {
-    "id": 13,
+    "id": "FOnaU0Rprw",
     "company": "Crowdfund",
     "logo": "./assets/logos/crowdfund.svg",
     "logoBackground": "hsl(157, 57%, 50%)",
@@ -417,7 +417,7 @@
     }
   },
   {
-    "id": 14,
+    "id": "hL-0hz1i2x",
     "company": "Coffeeroasters",
     "logo": "./assets/logos/coffeeroasters.svg",
     "logoBackground": "hsl(29, 60%, 87%)",
@@ -449,7 +449,7 @@
     }
   },
   {
-    "id": 15,
+    "id": "Gy2NkCRZYM",
     "company": "Blogr",
     "logo": "./assets/logos/blogr.svg",
     "logoBackground": "hsl(12, 79%, 52%)",
