@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import ReactHtmlParser from 'react-html-parser';
-import { useLocation } from 'react-router';
 
 const StyledJobDetails = styled.div`
   transform: translateY(25px);
@@ -11,7 +10,6 @@ const StyledJobDetails = styled.div`
   align-items: center;
   width: 100%;
 `
-
 const JobDetailsHeader = styled.div`
   width: min(730px, 90%);
   background-color: ${props => props.theme === 'light' ? '#fff' : '#19202D'};
@@ -120,7 +118,6 @@ const JobDetailsHeader = styled.div`
     }
   }
 `
-
 const JobDetailsDescription = styled.div`
   width: min(730px, 90%);
   margin-top: 20px;
@@ -175,7 +172,6 @@ const JobDetailsDescription = styled.div`
     line-height: 28px;
   }
 `
-
 const JobDetailsRequirements = styled.div`
   margin-top: 40px;
   color: #6E8098;
@@ -212,46 +208,6 @@ const JobDetailsRequirements = styled.div`
   }
 
 `
-
-const JobDetailsFooter = styled.div`
-  width: min(730px, 90%);
-  background: url(../assets/desktop/bg-pattern-detail-footer.svg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  border-radius: 6px;
-  margin-top: 20px;
-  padding: 30px 20px;
-  color: #fff;
-
-  .footer__title {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 20px;
-  }
-
-  .footer__text {
-    font-weight: 300;
-    line-height: 26px;
-  }
-
-  .footer__link {
-    width: 100%;
-    background: transparent;
-    border: none;
-    display: inline-block;
-    color: #fff;
-    font-size: 16px;
-    overflow-wrap: break-word;
-  }
-
-  a {
-    color: #fff;
-    text-decoration: none;
-    line-height: 26px;
-  }
-`
-
 const JobCta = styled.div`
   width: 100%;
   background-color: ${props => props.theme === 'light' ? '#fff' : '#19202D'};;
@@ -297,7 +253,6 @@ const JobCta = styled.div`
     }
   }
 `
-
 const Button = styled.a`
   text-decoration: none;
   display: inline-block;
