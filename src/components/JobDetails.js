@@ -44,7 +44,7 @@ const JobDetailsHeader = styled.div`
     width: 50px;
     height: 50px;
     border-radius: 14px;
-    background-color: #fff;
+    background-color: ${props => props.logoBg};
     padding: 10px;
     object-fit: contain;
   }
@@ -176,6 +176,43 @@ const JobDetailsDescription = styled.div`
   }
 `
 
+const JobDetailsRequirements = styled.div`
+  margin-top: 40px;
+  color: #6E8098;
+  line-height: 28px;
+  
+  & .requirements__title {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 16px 0px;
+    color: ${props => props.theme === 'light' ? '#19202D' : '#fff'};
+    transition: color .3s;
+  }
+
+  & .requirements__list {
+    margin-top: 30px;
+  }
+
+  & .requirements__list-item {
+    list-style-type: disc;
+    list-style-position: inside;
+  }
+
+  & .requirements__list-item+.requirements__list-item {
+    margin-top: 15px;
+  }
+
+  & .requirements__ollist-item {
+    list-style-type: decimal;
+    list-style-position: inside;
+  }
+
+  & .requirements__ollist-item+.requirements__ollist-item {
+    margin-top: 15px;
+  }
+
+`
+
 const JobDetailsFooter = styled.div`
   width: min(730px, 90%);
   background: url(../assets/desktop/bg-pattern-detail-footer.svg);
@@ -292,71 +329,63 @@ export default function JobDetails(props) {
 
   const storedJob = JSON.parse(localStorage.getItem('selected_job'));
 
-  const { theme, visible, job = storedJob, handleUpdateLocation } = props;
-
-  const location = useLocation();
-
-  handleUpdateLocation(location.pathname);
+  const { theme, visible, job = storedJob } = props;
 
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
 
-  function formatTime(time) {
-    const today = new Date();
-    const jobDate = new Date(time);
-    const diff = today.getTime() - jobDate.getTime();
-
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-
-    if(days === 0 && hours === 0) return `${minutes} min ago`
-    if(days === 0) return `${hours} ${hours === 1 ? 'hr' : 'hrs'} ago`
-    return `${days} ${days === 1 ? 'day' : 'days'} ago`
-  }
-
   return (
     <>
       <StyledJobDetails visible={visible}>
-        <JobDetailsHeader theme={theme} img={job.company_logo}>
+        <JobDetailsHeader theme={theme} img={job.logo} logoBg={job.logoBackground}>
           <div className="header__data-container">
-            <img className="company__logo" src={job.company_logo} alt="company-logo"/>
+            <img className="company__logo" src={`.${job.logo}`} alt="company-logo"/>
             <div className="header_title-container">
               <h2 className="header__title">{job.company}</h2>
-              <a href={job.company_url} target="_blank" rel="noreferrer" className="header__website">{job.company_url}</a>
+              <a href={job.website} target="_blank" rel="noreferrer" className="header__website">{job.website}</a>
             </div>
-            <a href={job.company_url} target="_blank" rel="noreferrer" className="header__website-url">Company Site</a>
+            <a href={job.website} target="_blank" rel="noreferrer" className="header__website-url">Company Site</a>
           </div>
         </JobDetailsHeader>
         <JobDetailsDescription theme={theme}>
           <div className="description__header">
             <div className="description__header-data-container">
               <div className="description__tagline-container">
-                <p>{formatTime(job.created_at)}</p>
+                <p>{job.postedAt}</p>
                 <span className="dot"></span>
-                <p>{job.type}</p>
+                <p>{job.contract}</p>
               </div>
-              <h2 className="description__title">{job.title}</h2>
+              <h2 className="description__title">{job.position}</h2>
               <p className="tags">{job.location}</p>
             </div>
-            <Button>Apply Now</Button>
+            <Button href={job.apply} target="_blank">Apply Now</Button>
           </div>
           <div className="description__main-container">
             {ReactHtmlParser(job.description)}
           </div>
+          <JobDetailsRequirements theme={theme}>
+            <h2 className="requirements__title">Requirements</h2>
+            <p className="requirements__paragraph">{job.requirements.content}</p>
+            <ul className="requirements__list">
+              {job.requirements.items.map(item => <li className="requirements__list-item">{item}</li>)}
+            </ul>
+          </JobDetailsRequirements>
+          <JobDetailsRequirements theme={theme}>
+            <h2 className="requirements__title">What You Will Do</h2>
+            <p className="requirements__paragraph">{job.role.content}</p>
+            <ol className="requirements__list">
+              {job.role.items.map(item => <li className="requirements__ollist-item">{item}</li>)}
+            </ol>
+          </JobDetailsRequirements>
         </JobDetailsDescription>
-        <JobDetailsFooter>
-          <h2 className="footer__title">How to Apply</h2>
-          <div className="footer__link">{ReactHtmlParser(job.how_to_apply)}</div>
-        </JobDetailsFooter>
         <JobCta theme={theme}>
           <div className="cta_wrapper">
             <div className="cta_title-container">
-              <h2 className="cta_title">{job.company}</h2>
-              <a href={job.company_url} target="_blank" rel="noreferrer" className="cta_website">{job.company_url}</a>
+              <h2 className="cta_title">{job.position}</h2>
+              <a href={job.website} target="_blank" rel="noreferrer" className="cta_website">{job.company}</a>
             </div>
-            <Button href={job.company_url} target="_blank">Apply Now</Button>
+            <Button href={job.apply} target="_blank">Apply Now</Button>
           </div>
         </JobCta>
       </StyledJobDetails>

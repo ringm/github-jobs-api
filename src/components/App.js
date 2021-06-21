@@ -68,7 +68,7 @@ const Main = styled.div`
   font-family: 'Kumbh Sans', sans-serif;
   background-color: ${props => props.theme === 'light' ? '#F4F6F8' : '#121721'};
   transition: background-color .3s;
-  padding-bottom: ${props => props.location === '/' ? '100px' : '0'};
+  padding-bottom: 30px;
 
   & .wrapper {
     width: 100%;
@@ -77,21 +77,49 @@ const Main = styled.div`
     align-items: center;
   }
 `
-let pageNumber = 1;
 
 function App() {
 
   const [theme, setTheme] = useState('');
   const [jobs, setJobs] = useState([]);
+  const [contractFilter, setContractFilter] = useState(false);
+  const [positionFilter, setPositionFilter] = useState('');
+  const [locationFilter, setLocationFilter] = useState('');
   const [selectedJob, setSelectedJob] = useState();
-  const [location, setLocation] = useState('');
-  const [descriptionSearch, setDescriptionSearch] = useState('');
-  const [locationSearch, setLocationSearch] = useState('');
-  const [typeSearch, setTypeSearch] = useState('off');
+
+  const filters = {
+    contract: contract => contractFilter ? contract === 'Full Time' : contract,
+    position: position => position.toLowerCase().includes(positionFilter.toLowerCase()),
+    location: location => location.toLowerCase().includes(locationFilter.toLowerCase())
+  }
+
+  function filterJobs(array, filters) {
+    const filterKeys = Object.keys(filters);
+    return array.filter(item => {
+      // validates all filter criteria
+      return filterKeys.every(key => {
+        // ignores non-function predicates
+        if (typeof filters[key] !== 'function') return true;
+        return filters[key](item[key]);
+      });
+    });
+  }
 
   function handleThemeToggle(checked) {
     const newTheme = !checked ? 'light' : 'dark';
     setTheme(newTheme);
+  }
+
+  function handleContractFilterToggle() {
+    setContractFilter(!contractFilter);
+  }
+
+  function handlePositionFilterChange(value) {
+    setPositionFilter(value);
+  }
+
+  function handleLocationFilterChange(value) {
+    setLocationFilter(value);
   }
 
   function handleSelectedJob(id) {
@@ -100,34 +128,12 @@ function App() {
     setSelectedJob(job);
   }
 
-  function handleSearch(url) {
-    fetch(url)
+  useEffect(() => {
+    fetch('./data.json')
     .then(res => res.json())
     .then(data => {
       setJobs(data)
     })
-  }
-
-  function handleUpdateLocation(loc) {
-    setLocation(loc);
-  }
-
-  function loadMoreJobs() {
-    const currentJobs = [...jobs];
-    const desc = descriptionSearch === '' ? '' : `&description=${descriptionSearch}`
-    const loc = locationSearch === '' ? '' : `&location=${locationSearch}`
-    const type = typeSearch === '' ? '' : `&full_time=${typeSearch}`
-    pageNumber++;
-    const url = `https://cors.bridged.cc/https://jobs.github.com/positions.json?page=${pageNumber}${desc}${loc}${type}`
-    fetch(url)
-    .then(res => res.json())
-    .then(data => {
-      setJobs([...currentJobs, ...data])
-    })
-  }
-
-  useEffect(() => {
-    handleSearch('https://cors.bridged.cc/https://jobs.github.com/positions.json')
   }, [])
 
   useEffect(() => {
@@ -147,7 +153,6 @@ function App() {
                     className="header__logo"
                     src="../assets/desktop/logo.svg"
                     alt="logo"
-                    onClick={() => handleUpdateLocation('/')}
                   />
                 </Link>
                 <ThemeToggle 
@@ -157,30 +162,29 @@ function App() {
               </div>
               <Route path="/" exact render={() => 
                 <Search 
-                  theme={theme} 
-                  handleSearch={handleSearch}
-                  setDescriptionSearch={setDescriptionSearch}
-                  setLocationSearch={setLocationSearch}
-                  setTypeSearch={setTypeSearch}
+                  theme={theme}
+                  positionFilter={positionFilter}
+                  locationFilter={locationFilter}
+                  onContractFilterToggle={handleContractFilterToggle}
+                  onPositionFilterChange={handlePositionFilterChange}
+                  onLocationFilterChange={handleLocationFilterChange}
                 />
               } />
           </div>
-          <Main theme={theme} location={location}>
+          <Main theme={theme}>
             <div className="wrapper">
                 <Switch>
                   <Route path="/job-details/" render={() => 
                     <JobDetails
                       theme={theme}
                       job={selectedJob}
-                      handleUpdateLocation={handleUpdateLocation}
                     />}
                   />
                   <Route path="/" exact render={() => 
                     <ResultList 
                       theme={theme} 
-                      jobs={jobs}
+                      jobs={filterJobs(jobs, filters)}
                       handleSelectedJob={handleSelectedJob}
-                      loadMoreJobs={loadMoreJobs}
                     />} 
                   />
                 </Switch>

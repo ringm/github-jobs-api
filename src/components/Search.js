@@ -41,25 +41,13 @@ const SearchBarSmall = styled.div`
   .icons-small {
     display: flex;
     align-items: center;
+    margin-right: 15px;
   }
 
   .filter-icon {
     cursor: pointer;
     fill: ${props => props.theme === 'light' ? '#6E8098' : '#fff'} ;
     transition: fill .35s;
-  }
-
-  .search-icon {
-    width: 48px;
-    height: 48px;
-    background-color: #5964E0;
-    border-radius: 6px;
-    background-image: url(../assets/desktop/icon-search.svg);
-    background-repeat: no-repeat;
-    background-position: center;
-    margin-left: 25px;
-    cursor: pointer;
-    border: none;
   }
 
 `
@@ -102,27 +90,6 @@ const SearchCol = styled.div`
     font-size: 15px;
     font-weight: 300;
     transform: translateY(2px)
-  }
-
-  .search_btn {
-    background-color: #5964E0;
-    border: none;
-    color: #fff;
-    padding: 16px 12px;
-    border-radius: 6px;
-    font-size: 16px;
-    transition: background-color .2s;
-    cursor: pointer;
-  }
-
-  .search_btn:hover {
-    background-color: #939BF4;
-  }
-
-  @media (min-width: 968px) {
-    .search_btn {
-      padding: 16px 18px;
-    }
   }
 
   .checkbox_container {
@@ -173,7 +140,7 @@ const SearchCol = styled.div`
 
   `
 
-  const Filter = styled.div`
+const Filter = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -225,23 +192,8 @@ const FilterBox = styled.div`
     align-self: flex-end;
   }
 
-  .search-button {
-    display: inline-block;
-    width: 100%;
-    border: none;
-    background-color: #5964E0;
-    border-radius: 4px;
-    color: #fff;
-    font-weight: 700;
-    font-size: 16px;
-    font-family: 'Kumbh Sans';
-    letter-spacing: .5px;
-    padding: 15px 0;
-    transition: background-color .2s;
-  }
-
-  .search-button:hover {
-    background-color: #939BF4;
+  .row.contract-filter {
+    margin-top: 20px;
   }
 
   .fulltime-checkbox-input {
@@ -283,22 +235,9 @@ const FilterBox = styled.div`
   }
 `
 
-let description = '';
-let location = '';
-let type = 'off';
-
-export default function Search({ theme, handleSearch, setDescriptionSearch, setLocationSearch, setTypeSearch }) {
+export default function Search({ theme, onContractFilterToggle, onPositionFilterChange, onLocationFilterChange, positionFilter, locationFilter }) {
 
   const [filterVisibility, setFilterVisibility] = useState(false);
-
-  function handleSearchButton() {
-    const url = `https://cors.bridged.cc/https://jobs.github.com/positions.json?page=1&description=${description}&location=${location}&full_time=${type}`;
-    setDescriptionSearch(description)
-    setLocationSearch(location)
-    setTypeSearch(type)
-    handleSearch(url)
-  }
-
 
   return (
     <>
@@ -315,10 +254,6 @@ export default function Search({ theme, handleSearch, setDescriptionSearch, setL
               >
                 <path d="M19.108 0H.86a.86.86 0 00-.764.455.833.833 0 00.068.884l6.685 9.202.007.01c.242.32.374.708.375 1.107v7.502a.825.825 0 00.248.594.865.865 0 00.942.18l3.756-1.4c.337-.1.56-.41.56-.784v-6.092c0-.399.132-.787.375-1.108l.007-.009 6.685-9.202c.19-.26.217-.6.068-.884A.86.86 0 0019.108 0z" fillRule="nonzero"/>
             </svg>
-            <button 
-              className="search-icon"
-              onClick={handleSearchButton}
-              ></button>
           </div>
         </SearchBarSmall>
         <SearchBarBig>
@@ -328,9 +263,8 @@ export default function Search({ theme, handleSearch, setDescriptionSearch, setL
               className="input" 
               type='text' 
               placeholder="Filter by title..." 
-              onInput={e => {
-                description = e.target.value
-              }}
+              value={positionFilter}
+              onInput={e => onPositionFilterChange(e.target.value)}
             />
           </SearchCol>
           <SearchCol border>
@@ -339,7 +273,8 @@ export default function Search({ theme, handleSearch, setDescriptionSearch, setL
               className="input" 
               type='text' 
               placeholder="Filter by location..." 
-              onInput ={e => location = e.target.value}
+              value={locationFilter}
+              onInput ={e => onLocationFilterChange(e.target.value)}
             />
           </SearchCol>
           <SearchCol theme={theme}>
@@ -349,15 +284,11 @@ export default function Search({ theme, handleSearch, setDescriptionSearch, setL
                 type="checkbox" 
                 name="job-type" 
                 id="job-type"
-                onChange={e => e.target.checked ? type = 'on' : type = 'off'}
+                onChange={onContractFilterToggle}
               />
               <label className="label" htmlFor="job-type"></label>
               <p className="checkbox_text">Full Time</p>
             </div>
-            <button 
-            className="search_btn"
-            onClick={handleSearchButton}
-            >Search</button>
           </SearchCol>
         </SearchBarBig>
       </SearchBarContainer>
@@ -374,30 +305,22 @@ export default function Search({ theme, handleSearch, setDescriptionSearch, setL
                 type="text" 
                 name="location" 
                 id="location" 
-                placeholder="Filter by location..." 
-                onInput ={e => location = e.target.value}
+                placeholder="Filter by location..."
+                value={locationFilter}
+                onInput ={e => onLocationFilterChange(e.target.value)}
               />
               <label htmlFor="location"></label>
             </div>
-            <div className="row">
+            <div className="row contract-filter">
               <input 
                 className="fulltime-checkbox-input" 
                 type="checkbox" 
                 name="fulltime" 
                 id="fulltime"
-                onChange={e => e.target.checked ? type = 'on' : type = 'off'}
+                onChange={onContractFilterToggle}
               />
               <label className="fulltime-checkbox-label" htmlFor="fulltime"></label>
               <p className="fulltime-checkbox-text">Full Time Only</p>
-            </div>
-            <div className="row">
-              <button 
-                className="search-button"
-                onClick={() => {
-                  handleSearchButton()
-                  setFilterVisibility(false)
-                }}
-              >Search</button>
             </div>
           </FilterBox>
         </Filter>

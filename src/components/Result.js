@@ -20,7 +20,7 @@ const ResultContainer = styled.div`
 
   .company-logo-card {
     display: ${props => props.img ? 'inline-block' : 'none'};
-    background-color: #fff;
+    background-color: ${props => props.logoBg};
     width: 50px;
     height: 50px;
     margin-bottom: 25px;
@@ -98,33 +98,19 @@ export default function Result(props) {
     handleSelectedJob(job.id);
   }
 
-  function formatTime(time) {
-    const today = new Date();
-    const jobDate = new Date(time);
-    const diff = today.getTime() - jobDate.getTime();
-
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-
-    if(days === 0 && hours === 0) return `${minutes} min ago`
-    if(days === 0) return `${hours} ${hours === 1 ? 'hr' : 'hrs'} ago`
-    return `${days} ${days === 1 ? 'day' : 'days'} ago`
-  }
-
   return (
-    <ResultContainer theme={theme} img={job.company_logo}>
+    <ResultContainer theme={theme} img={job.logo} logoBg={job.logoBackground}>
       <div className="result__data-container">
-        <img className="company-logo-card" src={job.company_logo} alt="company-logo"/>
+        <img className="company-logo-card" src={job.logo} alt="company-logo"/>
         <div className="tagline-container">
-          <p className="time">{formatTime(job.created_at)}</p>
+          <p className="time">{job.postedAt}</p>
           <span className="dot"></span>
-          <p className="job-type">{job.type}</p>
+          <p className="job-type">{job.contract}</p>
         </div>
         <Link 
           to={url}
           onClick={handleClick}>
-          <h2>{job.title}</h2>
+          <h2>{job.position}</h2>
         </Link>
         <p className="company-name">{job.company}</p>
         <p className="tags">{job.location}</p>
