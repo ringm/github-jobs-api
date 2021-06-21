@@ -148,7 +148,7 @@ function App() {
         <div className="relative">
           <div className="header">
               <div className="header__row">
-                <Link to="/" exact="true">
+                <Link to="/">
                   <img
                     className="header__logo"
                     src="../assets/desktop/logo.svg"
